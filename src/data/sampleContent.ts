@@ -1,4 +1,4 @@
-///export interface ContentItem {
+/// export interface ContentItem {
   id: string;
   title: string;
   description: string;
