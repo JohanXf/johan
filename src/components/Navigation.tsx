@@ -14,7 +14,7 @@ const Navigation = ({ activeSection, setActiveSection, isAdmin, onAdminToggle }:
 
   const navigationItems = [
     { id: 'home', label: 'Home' },
-    { id: 'guides', label: 'Guides' },
+    { id: 'guides', label: 'Hall of Fame' },
     { id: 'articles', label: 'Articles' }
   ];
 
