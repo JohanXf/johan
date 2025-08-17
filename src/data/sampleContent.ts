@@ -10,7 +10,7 @@ export interface ContentItem {
 
 export const sampleGuides: ContentItem[] = [
   {
-    id: 'monad-guide',
+    id: 'monad-guide1',
     title: "Building on Monad: Complete Developer Guide",
     description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
     date: "Jan 15, 2025",
@@ -84,7 +84,7 @@ Building on Monad opens up new possibilities for high-performance dApps. Start e
 Happy building! 🚀`
   },
   {
-    id: 'monad-guide',
+    id: 'monad-guide2',
     title: "Building on Monad: Complete Developer Guide",
     description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
     date: "Jan 15, 2025",
