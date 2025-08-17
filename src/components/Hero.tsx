@@ -32,8 +32,7 @@ const Hero = ({ setActiveSection }: HeroProps) => {
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            I'm a blockchain developer passionate about creating scalable, secure, and innovative 
-            decentralized applications that push the boundaries of what's possible.
+            Hey frens, I’m part of the Monad community and I put this site together to make things easier for newcomers. Here you’ll find simple guides on how to get roles, join in on the fun, and explore different dApps in the Monad ecosystem. I’m learning and building along with you, so think of this as a space where we grow together.
           </p>
 
           {/* CTA Buttons */}
