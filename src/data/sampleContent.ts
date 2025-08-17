@@ -1,3 +1,250 @@
+export interface ContentItem {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  readTime: string;
+  category: string;
+  content: string;
+  tags?: string[];
+  featured?: boolean;
+}
+
+export const sampleGuides: ContentItem[] = [
+  {
+    id: 'monad-developer-guide',
+    title: "Building on Monad: Complete Developer Guide",
+    description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
+    date: "Jan 15, 2025",
+    readTime: "12 min read",
+    category: "Development",
+    tags: ["blockchain", "development", "monad", "web3"],
+    featured: true,
+    content: `# Building on Monad: Complete Developer Guide
+
+Welcome to the comprehensive guide for developing on the Monad blockchain. This guide will walk you through everything you need to know to build powerful decentralized applications.
+
+## What is Monad?
+
+Monad is a high-performance, EVM-compatible blockchain that brings unprecedented speed and efficiency to decentralized applications. With its innovative architecture, Monad can process thousands of transactions per second while maintaining full Ethereum compatibility.
+
+## Getting Started
+
+### Prerequisites
+- Basic knowledge of Solidity
+- Node.js installed on your machine
+- MetaMask or similar Web3 wallet
+
+### Setting Up Your Development Environment
+
+First, let's set up your development environment for Monad:
+
+\`\`\`bash
+npm install -g @monad/cli
+monad init my-dapp
+cd my-dapp
+npm install
+\`\`\`
+
+### Your First Smart Contract
+
+Here's a simple smart contract to get you started:
+
+\`\`\`solidity
+pragma solidity ^0.8.0;
+
+contract MonadExample {
+    string public message;
+
+    constructor(string memory _message) {
+        message = _message;
+    }
+
+    function updateMessage(string memory _newMessage) public {
+        message = _newMessage;
+    }
+}
+\`\`\`
+
+## Advanced Features
+
+Monad offers several advanced features that set it apart from other blockchains:
+
+1. **Parallel Processing**: Execute transactions in parallel for maximum throughput
+2. **State Compression**: Efficient storage mechanisms to reduce costs
+3. **Developer Tools**: Comprehensive tooling for debugging and optimization
+
+## Best Practices
+
+- Always test on testnet first
+- Use gas optimization techniques
+- Implement proper error handling
+- Follow security best practices
+
+## Conclusion
+
+Building on Monad opens up new possibilities for high-performance dApps. Start experimenting with these concepts and join the growing Monad developer community.
+
+Happy building! 🚀`
+  },
+  {
+    id: 'web3-fundamentals',
+    title: "Web3 Fundamentals: Understanding Decentralized Applications",
+    description: "A comprehensive introduction to Web3 concepts, blockchain technology, and decentralized application architecture.",
+    date: "Jan 12, 2025",
+    readTime: "8 min read",
+    category: "Education",
+    tags: ["web3", "blockchain", "fundamentals", "dapps"],
+    featured: false,
+    content: `# Web3 Fundamentals: Understanding Decentralized Applications
+
+## Introduction to Web3
+
+Web3 represents the next evolution of the internet, built on blockchain technology and decentralized protocols. Unlike Web2, where data is controlled by centralized entities, Web3 gives users ownership and control over their data and digital assets.
+
+## Key Concepts
+
+### Blockchain Technology
+- Distributed ledger technology
+- Immutable transaction records
+- Consensus mechanisms
+
+### Smart Contracts
+- Self-executing contracts with terms written in code
+- Automated execution without intermediaries
+- Deployed on blockchain networks
+
+### Decentralized Applications (dApps)
+- Applications that run on blockchain networks
+- No central authority or single point of failure
+- Users interact directly with smart contracts
+
+## Benefits of Web3
+
+1. **Decentralization**: No single point of control
+2. **Transparency**: All transactions are publicly verifiable
+3. **Ownership**: Users own their data and digital assets
+4. **Programmable Money**: Smart contracts enable complex financial logic
+
+## Getting Started with Web3
+
+To begin your Web3 journey:
+1. Set up a crypto wallet
+2. Learn about different blockchain networks
+3. Explore existing dApps
+4. Start building your own projects
+
+The future of the internet is decentralized, and Web3 is leading this transformation.`
+  },
+  {
+    id: 'react-typescript-best-practices',
+    title: "React + TypeScript Best Practices for Modern Development",
+    description: "Essential patterns and practices for building robust React applications with TypeScript.",
+    date: "Jan 10, 2025",
+    readTime: "15 min read",
+    category: "Frontend",
+    tags: ["react", "typescript", "best-practices", "frontend"],
+    featured: true,
+    content: `# React + TypeScript Best Practices for Modern Development
+
+## Introduction
+
+Combining React with TypeScript provides type safety, better developer experience, and more maintainable code. This guide covers essential patterns and best practices.
+
+## Component Patterns
+
+### Functional Components with TypeScript
+
+\`\`\`tsx
+interface Props {
+  title: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+const Card: React.FC<Props> = ({ title, children, onClick }) => {
+  return (
+    <div className="card" onClick={onClick}>
+      <h2>{title}</h2>
+      {children}
+    </div>
+  );
+};
+\`\`\`
+
+### Custom Hooks
+
+\`\`\`tsx
+interface UseCounterReturn {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+  reset: () => void;
+}
+
+const useCounter = (initialValue = 0): UseCounterReturn => {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = useCallback(() => setCount(c => c + 1), []);
+  const decrement = useCallback(() => setCount(c => c - 1), []);
+  const reset = useCallback(() => setCount(initialValue), [initialValue]);
+
+  return { count, increment, decrement, reset };
+};
+\`\`\`
+
+## Best Practices
+
+1. **Use strict TypeScript configuration**
+2. **Prefer interfaces over types for object shapes**
+3. **Use proper event typing**
+4. **Implement proper error boundaries**
+5. **Use React.memo for performance optimization**
+
+## Common Patterns
+
+- State management with useReducer
+- Context API with TypeScript
+- Form handling with controlled components
+- API integration with proper typing
+
+Building with React and TypeScript creates scalable, maintainable applications that scale with your team.`
+  }
+];
+
+// Helper functions for filtering and searching content
+export const getContentById = (id: string): ContentItem | undefined => {
+  return sampleGuides.find(guide => guide.id === id);
+};
+
+export const getContentByCategory = (category: string): ContentItem[] => {
+  return sampleGuides.filter(guide => guide.category === category);
+};
+
+export const getFeaturedContent = (): ContentItem[] => {
+  return sampleGuides.filter(guide => guide.featured === true);
+};
+
+export const searchContent = (query: string): ContentItem[] => {
+  const lowercaseQuery = query.toLowerCase();
+  return sampleGuides.filter(guide => 
+    guide.title.toLowerCase().includes(lowercaseQuery) ||
+    guide.description.toLowerCase().includes(lowercaseQuery) ||
+    guide.content.toLowerCase().includes(lowercaseQuery) ||
+    guide.tags?.some(tag => tag.toLowerCase().includes(lowercaseQuery))
+  );
+};
+
+export const getCategories = (): string[] => {
+  const categories = sampleGuides.map(guide => guide.category);
+  return [...new Set(categories)];
+};
+
+export const getAllTags = (): string[] => {
+  const tags = sampleGuides.flatMap(guide => guide.tags || []);
+  return [...new Set(tags)];
+};
+
 /** export interface ContentItem {
   id: string;
   title: string;
