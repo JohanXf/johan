@@ -1,4 +1,4 @@
-/// export interface ContentItem {
+/** export interface ContentItem {
   id: string;
   title: string;
   description: string;
@@ -157,4 +157,4 @@ Building on Monad opens up new possibilities for high-performance dApps. Start e
 
 Happy building! 🚀`
   }
-]; ///
+]; */
