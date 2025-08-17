@@ -6,20 +6,16 @@ export interface ContentItem {
   readTime: string;
   category: string;
   content: string;
-  tags?: string[];
-  featured?: boolean;
 }
 
 export const sampleGuides: ContentItem[] = [
   {
-    id: 'monad-developer-guide',
+    id: 'monad-guide',
     title: "Building on Monad: Complete Developer Guide",
     description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
     date: "Jan 15, 2025",
     readTime: "12 min read",
     category: "Development",
-    tags: ["blockchain", "development", "monad", "web3"],
-    featured: true,
     content: `# Building on Monad: Complete Developer Guide
 
 Welcome to the comprehensive guide for developing on the Monad blockchain. This guide will walk you through everything you need to know to build powerful decentralized applications.
@@ -55,11 +51,11 @@ pragma solidity ^0.8.0;
 
 contract MonadExample {
     string public message;
-
+    
     constructor(string memory _message) {
         message = _message;
     }
-
+    
     function updateMessage(string memory _newMessage) public {
         message = _newMessage;
     }
@@ -88,320 +84,234 @@ Building on Monad opens up new possibilities for high-performance dApps. Start e
 Happy building! 🚀`
   },
   {
-    id: 'web3-fundamentals',
-    title: "Web3 Fundamentals: Understanding Decentralized Applications",
-    description: "A comprehensive introduction to Web3 concepts, blockchain technology, and decentralized application architecture.",
-    date: "Jan 12, 2025",
-    readTime: "8 min read",
-    category: "Education",
-    tags: ["web3", "blockchain", "fundamentals", "dapps"],
-    featured: false,
-    content: `# Web3 Fundamentals: Understanding Decentralized Applications
-
-## Introduction to Web3
-
-Web3 represents the next evolution of the internet, built on blockchain technology and decentralized protocols. Unlike Web2, where data is controlled by centralized entities, Web3 gives users ownership and control over their data and digital assets.
-
-## Key Concepts
-
-### Blockchain Technology
-- Distributed ledger technology
-- Immutable transaction records
-- Consensus mechanisms
-
-### Smart Contracts
-- Self-executing contracts with terms written in code
-- Automated execution without intermediaries
-- Deployed on blockchain networks
-
-### Decentralized Applications (dApps)
-- Applications that run on blockchain networks
-- No central authority or single point of failure
-- Users interact directly with smart contracts
-
-## Benefits of Web3
-
-1. **Decentralization**: No single point of control
-2. **Transparency**: All transactions are publicly verifiable
-3. **Ownership**: Users own their data and digital assets
-4. **Programmable Money**: Smart contracts enable complex financial logic
-
-## Getting Started with Web3
-
-To begin your Web3 journey:
-1. Set up a crypto wallet
-2. Learn about different blockchain networks
-3. Explore existing dApps
-4. Start building your own projects
-
-The future of the internet is decentralized, and Web3 is leading this transformation.`
-  },
-  {
-    id: 'react-typescript-best-practices',
-    title: "React + TypeScript Best Practices for Modern Development",
-    description: "Essential patterns and practices for building robust React applications with TypeScript.",
+    id: 'billions-network',
+    title: "Billions Network: Architecture Deep Dive",
+    description: "Understanding the core components and design principles behind Billions Network.",
     date: "Jan 10, 2025",
     readTime: "15 min read",
-    category: "Frontend",
-    tags: ["react", "typescript", "best-practices", "frontend"],
-    featured: true,
-    content: `# React + TypeScript Best Practices for Modern Development
+    category: "Architecture",
+    content: `# Billions Network: Architecture Deep Dive
 
-## Introduction
+In this comprehensive analysis, we'll explore the technical foundations of Billions Network and understand what makes it a unique player in the blockchain ecosystem.
 
-Combining React with TypeScript provides type safety, better developer experience, and more maintainable code. This guide covers essential patterns and best practices.
+## Network Overview
 
-## Component Patterns
+Billions Network represents a new approach to blockchain scalability and interoperability. Built with enterprise-grade requirements in mind, it offers:
 
-### Functional Components with TypeScript
+- High throughput capabilities
+- Cross-chain compatibility
+- Enterprise security standards
+- Developer-friendly APIs
 
-\`\`\`tsx
-interface Props {
-  title: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-}
+## Core Architecture Components
 
-const Card: React.FC<Props> = ({ title, children, onClick }) => {
-  return (
-    <div className="card" onClick={onClick}>
-      <h2>{title}</h2>
-      {children}
-    </div>
-  );
-};
-\`\`\`
+### 1. Consensus Mechanism
+Billions Network uses a hybrid consensus mechanism that combines:
+- Proof of Stake for energy efficiency
+- Byzantine Fault Tolerance for security
+- Dynamic validator selection for decentralization
 
-### Custom Hooks
+### 2. Layer Architecture
+The network operates on multiple layers:
+- **Layer 1**: Base blockchain with core consensus
+- **Layer 2**: Scaling solutions and state channels
+- **Layer 3**: Application-specific chains
 
-\`\`\`tsx
-interface UseCounterReturn {
-  count: number;
-  increment: () => void;
-  decrement: () => void;
-  reset: () => void;
-}
+## Technical Implementation
 
-const useCounter = (initialValue = 0): UseCounterReturn => {
-  const [count, setCount] = useState(initialValue);
+The network's technical stack includes several innovative components that work together to provide seamless functionality across different use cases.
 
-  const increment = useCallback(() => setCount(c => c + 1), []);
-  const decrement = useCallback(() => setCount(c => c - 1), []);
-  const reset = useCallback(() => setCount(initialValue), [initialValue]);
+## Future Developments
 
-  return { count, increment, decrement, reset };
-};
-\`\`\`
+Billions Network continues to evolve with upcoming features including enhanced privacy tools and improved cross-chain bridges.`
+  },
+  {
+    id: 'web3-security',
+    title: "Web3 Security Fundamentals",
+    description: "Essential security practices every Web3 developer should implement.",
+    date: "Jan 5, 2025",
+    readTime: "8 min read",
+    category: "Security",
+    content: `# Web3 Security Fundamentals
+
+Security in Web3 is paramount. This guide covers the essential security practices every developer must know.
+
+## Common Vulnerabilities
+
+### 1. Reentrancy Attacks
+Learn how to prevent malicious contracts from calling back into your functions.
+
+### 2. Integer Overflow/Underflow
+Use SafeMath libraries to prevent arithmetic vulnerabilities.
+
+### 3. Access Control Issues
+Implement proper role-based access control in your smart contracts.
 
 ## Best Practices
 
-1. **Use strict TypeScript configuration**
-2. **Prefer interfaces over types for object shapes**
-3. **Use proper event typing**
-4. **Implement proper error boundaries**
-5. **Use React.memo for performance optimization**
+1. **Code Audits**: Always audit your smart contracts
+2. **Testing**: Implement comprehensive test suites
+3. **Monitoring**: Set up monitoring for unusual activity
+4. **Updates**: Keep dependencies updated
 
-## Common Patterns
+## Tools and Resources
 
-- State management with useReducer
-- Context API with TypeScript
-- Form handling with controlled components
-- API integration with proper typing
+- OpenZeppelin for secure contract libraries
+- Slither for static analysis
+- MythX for security analysis
+- Tenderly for monitoring
 
-Building with React and TypeScript creates scalable, maintainable applications that scale with your team.`
+Remember: Security is not optional in Web3!`
+  },
+  {
+    id: 'smart-contract-testing',
+    title: "Smart Contract Testing Best Practices",
+    description: "Comprehensive guide to testing smart contracts effectively and safely.",
+    date: "Dec 28, 2024",
+    readTime: "10 min read",
+    category: "Testing",
+    content: `# Smart Contract Testing Best Practices
+
+Testing is crucial for smart contract development. This guide covers comprehensive testing strategies.
+
+## Testing Framework
+
+We'll use Hardhat for our testing examples:
+
+\`\`\`javascript
+const { expect } = require("chai");
+
+describe("MyContract", function() {
+  it("Should deploy correctly", async function() {
+    const MyContract = await ethers.getContractFactory("MyContract");
+    const contract = await MyContract.deploy();
+    expect(await contract.deployed());
+  });
+});
+\`\`\`
+
+## Types of Tests
+
+1. **Unit Tests**: Test individual functions
+2. **Integration Tests**: Test contract interactions
+3. **End-to-End Tests**: Test complete user flows
+4. **Gas Tests**: Optimize gas consumption
+
+## Advanced Testing Techniques
+
+- Fuzzing for edge cases
+- Property-based testing
+- Formal verification
+- Mainnet forking tests
+
+Remember: Thorough testing prevents costly bugs in production!`
   }
 ];
 
-// Helper functions for filtering and searching content
-export const getContentById = (id: string): ContentItem | undefined => {
-  return sampleGuides.find(guide => guide.id === id);
-};
-
-export const getContentByCategory = (category: string): ContentItem[] => {
-  return sampleGuides.filter(guide => guide.category === category);
-};
-
-export const getFeaturedContent = (): ContentItem[] => {
-  return sampleGuides.filter(guide => guide.featured === true);
-};
-
-export const searchContent = (query: string): ContentItem[] => {
-  const lowercaseQuery = query.toLowerCase();
-  return sampleGuides.filter(guide => 
-    guide.title.toLowerCase().includes(lowercaseQuery) ||
-    guide.description.toLowerCase().includes(lowercaseQuery) ||
-    guide.content.toLowerCase().includes(lowercaseQuery) ||
-    guide.tags?.some(tag => tag.toLowerCase().includes(lowercaseQuery))
-  );
-};
-
-export const getCategories = (): string[] => {
-  const categories = sampleGuides.map(guide => guide.category);
-  return [...new Set(categories)];
-};
-
-export const getAllTags = (): string[] => {
-  const tags = sampleGuides.flatMap(guide => guide.tags || []);
-  return [...new Set(tags)];
-};
-
-/** export interface ContentItem {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  readTime: string;
-  category: string;
-  content: string;
-}
-
-export const sampleGuides: ContentItem[] = [
+export const sampleArticles: ContentItem[] = [
   {
-    id: 'monad-guide1',
-    title: "Building on Monad: Complete Developer Guide",
-    description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
-    date: "Jan 15, 2025",
-    readTime: "12 min read",
-    category: "Development",
-    content: `# Building on Monad: Complete Developer Guide
+    id: 'defi-future',
+    title: "The Future of Decentralized Finance",
+    description: "My thoughts on where DeFi is heading and the challenges we need to overcome.",
+    date: "Jan 12, 2025",
+    readTime: "6 min read",
+    category: "Opinion",
+    content: `# The Future of Decentralized Finance
 
-Welcome to the comprehensive guide for developing on the Monad blockchain. This guide will walk you through everything you need to know to build powerful decentralized applications.
+As we step into 2025, the DeFi landscape continues to evolve at breakneck speed. Having been deeply involved in this space, I want to share my thoughts on where we're heading.
 
-## What is Monad?
+## Current State of DeFi
 
-Monad is a high-performance, EVM-compatible blockchain that brings unprecedented speed and efficiency to decentralized applications. With its innovative architecture, Monad can process thousands of transactions per second while maintaining full Ethereum compatibility.
+DeFi has come a long way from the early days of simple AMMs and lending protocols. Today, we have:
+- Complex yield farming strategies
+- Cross-chain bridges and protocols
+- Institutional-grade lending platforms
+- Synthetic assets and derivatives
 
-## Getting Started
+## The Challenges We Face
 
-### Prerequisites
-- Basic knowledge of Solidity
-- Node.js installed on your machine
-- MetaMask or similar Web3 wallet
+### 1. Scalability
+Despite advances in Layer 2 solutions, we still face significant scalability challenges. Transaction costs during peak times can make DeFi inaccessible to smaller users.
 
-### Setting Up Your Development Environment
+### 2. User Experience
+Let's be honest - DeFi is still too complex for mainstream adoption. We need better abstractions and user interfaces.
 
-First, let's set up your development environment for Monad:
+### 3. Regulatory Uncertainty
+The regulatory landscape remains murky, with different jurisdictions taking varying approaches to DeFi.
 
-\`\`\`bash
-npm install -g @monad/cli
-monad init my-dapp
-cd my-dapp
-npm install
-\`\`\`
+## What's Next?
 
-### Your First Smart Contract
+I believe the future of DeFi lies in:
 
-Here's a simple smart contract to get you started:
+### Account Abstraction
+Smart contract wallets will make DeFi more user-friendly by abstracting away the complexity of gas fees and transaction management.
 
-\`\`\`solidity
-pragma solidity ^0.8.0;
+### Cross-Chain Integration
+True interoperability between different blockchains will unlock new possibilities for capital efficiency and user experience.
 
-contract MonadExample {
-    string public message;
-    
-    constructor(string memory _message) {
-        message = _message;
-    }
-    
-    function updateMessage(string memory _newMessage) public {
-        message = _newMessage;
-    }
-}
-\`\`\`
+### Real-World Asset Integration
+Tokenization of real-world assets will bridge traditional finance with DeFi, creating massive new opportunities.
 
-## Advanced Features
+## My Prediction
 
-Monad offers several advanced features that set it apart from other blockchains:
+By 2030, I believe DeFi will be so seamlessly integrated into traditional financial services that users won't even realize they're using blockchain technology. The infrastructure will be invisible, but the benefits - transparency, programmability, and global accessibility - will be evident.
 
-1. **Parallel Processing**: Execute transactions in parallel for maximum throughput
-2. **State Compression**: Efficient storage mechanisms to reduce costs
-3. **Developer Tools**: Comprehensive tooling for debugging and optimization
+The road ahead is challenging, but the potential is immense. We're building the financial infrastructure for the next century.
 
-## Best Practices
-
-- Always test on testnet first
-- Use gas optimization techniques
-- Implement proper error handling
-- Follow security best practices
-
-## Conclusion
-
-Building on Monad opens up new possibilities for high-performance dApps. Start experimenting with these concepts and join the growing Monad developer community.
-
-Happy building! 🚀`
+**What are your thoughts on the future of DeFi? I'd love to hear different perspectives on where we're heading.**`
   },
+
   {
-    id: 'monad-guide2',
-    title: "Building on Monad: Complete Developer Guide",
-    description: "Everything you need to know to start building decentralized applications on the Monad blockchain.",
-    date: "Jan 15, 2025",
-    readTime: "12 min read",
-    category: "Development",
-    content: `# Building on Monad: Complete Developer Guide
+    id: 'web3-lessons',
+    title: "Lessons from Building in Web3",
+    description: "Key insights and hard-learned lessons from my Web3 development journey.",
+    date: "Jan 3, 2025",
+    readTime: "7 min read",
+    category: "Experience",
+    content: `# Lessons from Building in Web3
 
-Welcome to the comprehensive guide for developing on the Monad blockchain. This guide will walk you through everything you need to know to build powerful decentralized applications.
+After three years of building in the Web3 space, I've learned some valuable lessons - often the hard way. Here are the insights I wish I had when I started.
 
-## What is Monad?
+## Lesson 1: Start Simple
 
-Monad is a high-performance, EVM-compatible blockchain that brings unprecedented speed and efficiency to decentralized applications. With its innovative architecture, Monad can process thousands of transactions per second while maintaining full Ethereum compatibility.
+My first DeFi protocol was overly complex. I tried to build everything at once - lending, borrowing, yield farming, governance. It was a mess.
 
-## Getting Started
+**The lesson**: Build an MVP first. Get one core feature right before adding complexity.
 
-### Prerequisites
-- Basic knowledge of Solidity
-- Node.js installed on your machine
-- MetaMask or similar Web3 wallet
+## Lesson 2: Gas Is Everything
 
-### Setting Up Your Development Environment
+I once deployed a contract that was so gas-inefficient it cost $200 to perform a simple transaction. Users weren't happy.
 
-First, let's set up your development environment for Monad:
+**The lesson**: Always optimize for gas. Use tools like \`forge test --gas-report\` and consider every operation's gas cost.
 
-\`\`\`bash
-npm install -g @monad/cli
-monad init my-dapp
-cd my-dapp
-npm install
-\`\`\`
+## Lesson 3: Security Is Not Optional
 
-### Your First Smart Contract
+Early in my career, I thought basic testing was enough. Then I saw projects lose millions due to simple bugs.
 
-Here's a simple smart contract to get you started:
+**The lesson**: 
+- Audit everything
+- Use established patterns (OpenZeppelin)
+- Test edge cases extensively
+- Consider formal verification for critical contracts
 
-\`\`\`solidity
-pragma solidity ^0.8.0;
+## Lesson 4: User Experience Matters More Than Tech
 
-contract MonadExample {
-    string public message;
-    
-    constructor(string memory _message) {
-        message = _message;
-    }
-    
-    function updateMessage(string memory _newMessage) public {
-        message = _newMessage;
-    }
-}
-\`\`\`
+I built a technically impressive protocol with terrible UX. It had 5 users despite being feature-complete.
 
-## Advanced Features
+**The lesson**: Users don't care about your clever architecture. They care about solving their problems easily.
 
-Monad offers several advanced features that set it apart from other blockchains:
+## Lesson 5: Community Is Everything
 
-1. **Parallel Processing**: Execute transactions in parallel for maximum throughput
-2. **State Compression**: Efficient storage mechanisms to reduce costs
-3. **Developer Tools**: Comprehensive tooling for debugging and optimization
+The most successful projects aren't necessarily the most technically advanced - they're the ones with strong communities.
 
-## Best Practices
+**The lesson**: Build in public, engage with users, and listen to feedback constantly.
 
-- Always test on testnet first
-- Use gas optimization techniques
-- Implement proper error handling
-- Follow security best practices
+## Looking Forward
 
-## Conclusion
+Web3 development is challenging but incredibly rewarding. Every failure teaches you something valuable, and every success opens new possibilities.
 
-Building on Monad opens up new possibilities for high-performance dApps. Start experimenting with these concepts and join the growing Monad developer community.
+My advice to new developers: embrace the chaos, learn constantly, and never stop building.
 
-Happy building! 🚀`
+**What lessons have you learned from building in Web3? I'd love to hear your experiences.**`
   }
-]; */
+];
