@@ -81,7 +81,7 @@ const AdminLogin = ({ onLogin, onClose }: AdminLoginProps) => {
 
         <div className="mt-6 p-4 bg-muted/20 rounded-lg border border-border/30">
           <p className="text-xs text-muted-foreground">
-            <strong>Demo Password:</strong> johan2025
+            <strong>Demo Password:</strong> abcd1234
           </p>
         </div>
       </div>
