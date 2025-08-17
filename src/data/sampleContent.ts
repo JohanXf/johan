@@ -82,7 +82,5 @@ Monad offers several advanced features that set it apart from other blockchains:
 Building on Monad opens up new possibilities for high-performance dApps. Start experimenting with these concepts and join the growing Monad developer community.
 
 Happy building! 🚀`
-  },
-  { 
-}
+  }
 ];
