@@ -5,7 +5,7 @@ import ContentGrid from './ContentGrid';
 import ContentReader from './ContentReader';
 import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
-import { sampleGuides, sampleArticles, type ContentItem } from '@/data/sampleContent';
+import { type ContentItem } from '@/data/sampleContent';
 
 const PersonalWebsite = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -16,14 +16,6 @@ const PersonalWebsite = () => {
   const [guides, setGuides] = useState<ContentItem[]>([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [createType, setCreateType] = useState<'article' | 'guide'>('article');
-
-  // Initialize with sample content
-  useEffect(() => {
-    if (articles.length === 0 && guides.length === 0) {
-      setArticles(sampleArticles);
-      setGuides(sampleGuides);
-    }
-  }, [articles.length, guides.length]);
 
   // Admin functions
   const handleAdminLogin = (password: string) => {
