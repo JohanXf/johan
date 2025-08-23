@@ -111,13 +111,13 @@ const PersonalWebsite = () => {
       case 'guides':
         return (
           <ContentGrid
-            title="Guides"
+            title="Hall of Fame"
             items={guides}
             onSelectItem={setSelectedArticle}
             onCreateNew={isAdmin ? () => handleCreateNew('guide') : undefined}
             onDeleteItem={isAdmin ? (id) => handleDeleteContent(id, 'guide') : undefined}
             isAdmin={isAdmin}
-            emptyMessage="No guides available yet."
+            emptyMessage="No hall of fame content available yet."
           />
         );
       
