@@ -1,3 +1,4 @@
+
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ContentCard from './ContentCard';
@@ -41,7 +42,7 @@ const ContentGrid = ({
           </h1>
           <p className="text-xl text-muted-foreground">
             {title === 'Guides' 
-              ? 'Technical guides and tutorials for blockchain development'
+              ? 'Hall of Fame content and featured tutorials'
               : 'Thoughts, insights, and experiences from the Web3 space'
             }
           </p>

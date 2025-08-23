@@ -38,7 +38,7 @@ const Hero = ({ setActiveSection }: HeroProps) => {
             className="gap-2 text-lg px-8 py-4"
           >
             <BookOpen size={20} />
-            Browse Guides
+            Browse Hall of Fame
           </Button>
 
           <Button

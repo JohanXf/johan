@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, Play, Pause } from 'lucide-react';
+import { RotateCcw, Play, Pause, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface Position {
   x: number;
@@ -74,29 +73,39 @@ const SnakeGame = () => {
     });
   }, [direction, food, gameOver, isPlaying, generateFood]);
 
+  const handleDirectionChange = (newDirection: Position) => {
+    if (!isPlaying) return;
+    
+    // Prevent reversing into itself
+    if (newDirection.x !== 0 && direction.x === -newDirection.x) return;
+    if (newDirection.y !== 0 && direction.y === -newDirection.y) return;
+    
+    setDirection(newDirection);
+  };
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!isPlaying) return;
       
       switch (e.key) {
         case 'ArrowUp':
-          if (direction.y === 0) setDirection({ x: 0, y: -1 });
+          handleDirectionChange({ x: 0, y: -1 });
           break;
         case 'ArrowDown':
-          if (direction.y === 0) setDirection({ x: 0, y: 1 });
+          handleDirectionChange({ x: 0, y: 1 });
           break;
         case 'ArrowLeft':
-          if (direction.x === 0) setDirection({ x: -1, y: 0 });
+          handleDirectionChange({ x: -1, y: 0 });
           break;
         case 'ArrowRight':
-          if (direction.x === 0) setDirection({ x: 1, y: 0 });
+          handleDirectionChange({ x: 1, y: 0 });
           break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [direction, isPlaying]);
+  }, [isPlaying]);
 
   useEffect(() => {
     const gameInterval = setInterval(moveSnake, 150);
@@ -153,7 +162,7 @@ const SnakeGame = () => {
         </div>
 
         <div 
-          className="grid gap-1 p-4 bg-darker-glass rounded-lg border border-border/50 mx-auto"
+          className="grid gap-1 p-4 bg-darker-glass rounded-lg border border-border/50 mx-auto mb-6"
           style={{ 
             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
             width: 'fit-content'
@@ -171,6 +180,51 @@ const SnakeGame = () => {
           })}
         </div>
 
+        {/* Mobile Controls */}
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground mb-4">Mobile Controls:</p>
+          <div className="flex flex-col items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleDirectionChange({ x: 0, y: -1 })}
+              className="w-12 h-12 p-0"
+              disabled={!isPlaying}
+            >
+              <ArrowUp size={20} />
+            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDirectionChange({ x: -1, y: 0 })}
+                className="w-12 h-12 p-0"
+                disabled={!isPlaying}
+              >
+                <ArrowLeft size={20} />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDirectionChange({ x: 1, y: 0 })}
+                className="w-12 h-12 p-0"
+                disabled={!isPlaying}
+              >
+                <ArrowRight size={20} />
+              </Button>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleDirectionChange({ x: 0, y: 1 })}
+              className="w-12 h-12 p-0"
+              disabled={!isPlaying}
+            >
+              <ArrowDown size={20} />
+            </Button>
+          </div>
+        </div>
+
         {gameOver && (
           <div className="mt-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
             <h3 className="text-xl font-bold text-destructive mb-2">Game Over!</h3>
@@ -182,7 +236,7 @@ const SnakeGame = () => {
         )}
 
         <div className="mt-6 text-sm text-muted-foreground">
-          <p>Use arrow keys to control the snake</p>
+          <p>Use arrow keys or mobile controls to move the snake</p>
           <p>Eat the pink food to grow and score points!</p>
         </div>
       </div>
