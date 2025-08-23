@@ -5,6 +5,7 @@ import ContentGrid from './ContentGrid';
 import ContentReader from './ContentReader';
 import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
+import SnakeGame from './SnakeGame';
 import { type ContentItem } from '@/data/sampleContent';
 
 const PersonalWebsite = () => {
@@ -132,6 +133,9 @@ const PersonalWebsite = () => {
             emptyMessage="No articles available yet."
           />
         );
+      
+      case 'snake':
+        return <SnakeGame />;
       
       default:
         return <Hero setActiveSection={setActiveSection} />;
