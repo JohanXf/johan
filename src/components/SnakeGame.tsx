@@ -162,7 +162,7 @@ const SnakeGame = () => {
         </div>
 
         <div 
-          className="grid gap-1 p-4 bg-darker-glass rounded-lg border border-border/50 mx-auto mb-6"
+          className="grid gap-1 p-4 bg-darker-glass rounded-lg border border-border/50 mx-auto mb-8"
           style={{ 
             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
             width: 'fit-content'
@@ -180,47 +180,65 @@ const SnakeGame = () => {
           })}
         </div>
 
-        {/* Mobile Controls */}
+        {/* Large Mobile Controls */}
         <div className="mb-6">
-          <p className="text-sm text-muted-foreground mb-4">Mobile Controls:</p>
-          <div className="flex flex-col items-center gap-2">
+          <p className="text-lg font-semibold text-neon-cyan mb-6">Touch Controls</p>
+          <div className="flex flex-col items-center gap-4">
+            {/* Up Button */}
             <Button
-              variant="ghost"
-              size="sm"
+              variant="neon"
+              size="xl"
               onClick={() => handleDirectionChange({ x: 0, y: -1 })}
-              className="w-12 h-12 p-0"
+              className="w-20 h-20 rounded-full shadow-glow hover:shadow-neon transition-all duration-300 disabled:opacity-30"
               disabled={!isPlaying}
             >
-              <ArrowUp size={20} />
+              <ArrowUp size={32} />
             </Button>
-            <div className="flex gap-2">
+            
+            {/* Left, Center, Right Buttons */}
+            <div className="flex items-center gap-4">
               <Button
-                variant="ghost"
-                size="sm"
+                variant="neon"
+                size="xl"
                 onClick={() => handleDirectionChange({ x: -1, y: 0 })}
-                className="w-12 h-12 p-0"
+                className="w-20 h-20 rounded-full shadow-glow hover:shadow-neon transition-all duration-300 disabled:opacity-30"
                 disabled={!isPlaying}
               >
-                <ArrowLeft size={20} />
+                <ArrowLeft size={32} />
               </Button>
+              
+              {/* Center space/pause button */}
+              <div className="w-20 h-20 flex items-center justify-center">
+                <Button
+                  variant="glass"
+                  size="lg"
+                  onClick={toggleGame}
+                  className="w-16 h-16 rounded-full"
+                >
+                  {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+                </Button>
+              </div>
+              
               <Button
-                variant="ghost"
-                size="sm"
+                variant="neon"
+                size="xl"
                 onClick={() => handleDirectionChange({ x: 1, y: 0 })}
-                className="w-12 h-12 p-0"
+                className="w-20 h-20 rounded-full shadow-glow hover:shadow-neon transition-all duration-300 disabled:opacity-30"
                 disabled={!isPlaying}
               >
-                <ArrowRight size={20} />
+                <ArrowRight size={32} />
               </Button>
             </div>
+            
+            {/* Down Button */}
             <Button
-              variant="ghost"
-              size="sm"
+              variant="neon"
+              size="xl"
               onClick={() => handleDirectionChange({ x: 0, y: 1 })}
-              className="w-12 h-12 p-0"
+              className="w-20 h-20 rounded-full shadow-glow hover:shadow-neon transition-all duration-300 disabled:opacity-30"
               disabled={!isPlaying}
             >
-              <ArrowDown size={20} />
+              <ArrowDown size={32} />
             </Button>
           </div>
         </div>
@@ -236,7 +254,7 @@ const SnakeGame = () => {
         )}
 
         <div className="mt-6 text-sm text-muted-foreground">
-          <p>Use arrow keys or mobile controls to move the snake</p>
+          <p>Use arrow keys or touch controls to move the snake</p>
           <p>Eat the pink food to grow and score points!</p>
         </div>
       </div>
