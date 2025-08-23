@@ -1,5 +1,6 @@
-import { ArrowRight, Code, BookOpen, Zap } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
+import { ArrowRight, FileText, BookOpen, Gamepad2 } from 'lucide-react';
 
 interface HeroProps {
   setActiveSection: (section: string) => void;
@@ -7,82 +8,77 @@ interface HeroProps {
 
 const Hero = ({ setActiveSection }: HeroProps) => {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-neon-cyan/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-neon-purple/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }}></div>
-      </div>
+    <div className="min-h-[80vh] flex items-center justify-center">
+      <div className="text-center max-w-4xl mx-auto px-4">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-neon-cyan to-neon-purple bg-clip-text text-transparent">
+          Johan Vandenberghe
+        </h1>
+        
+        <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Welcome to my digital space where I share insights, guides, and experiences 
+          in technology and beyond.
+        </p>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/50 border border-border/50 rounded-full text-sm text-muted-foreground mb-8 backdrop-blur-sm">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            Available for collaboration
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button
+            size="lg"
+            variant="neon"
+            onClick={() => setActiveSection('articles')}
+            className="gap-2 text-lg px-8 py-4"
+          >
+            <FileText size={20} />
+            Read Articles
+            <ArrowRight size={20} />
+          </Button>
+          
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => setActiveSection('guides')}
+            className="gap-2 text-lg px-8 py-4"
+          >
+            <BookOpen size={20} />
+            Browse Guides
+          </Button>
+
+          <Button
+            size="lg"
+            variant="ghost"
+            onClick={() => setActiveSection('snake')}
+            className="gap-2 text-lg px-8 py-4 text-neon-pink hover:text-neon-pink hover:bg-neon-pink/10"
+          >
+            <Gamepad2 size={20} />
+            Play Game
+          </Button>
+        </div>
+
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="glass-card p-6 rounded-xl">
+            <FileText className="w-12 h-12 text-neon-cyan mb-4 mx-auto" />
+            <h3 className="text-xl font-semibold mb-3">Articles</h3>
+            <p className="text-muted-foreground">
+              In-depth thoughts and analysis on various topics
+            </p>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Building the
-            <span className="block bg-gradient-primary bg-clip-text text-transparent animate-glow">
-              Future of Web3
-            </span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            Hey frens, I’m part of the Monad community and I put this site together to make things easier for newcomers. Here you’ll find simple guides on how to get roles, join in on the fun, and explore different dApps in the Monad ecosystem. I’m learning and building along with you, so think of this as a space where we grow together.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button
-              variant="hero"
-              size="xl"
-              onClick={() => setActiveSection('guides')}
-              className="group"
-            >
-              <BookOpen size={20} />
-              Explore Guides
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              variant="glow"
-              size="xl"
-              onClick={() => setActiveSection('articles')}
-              className="group"
-            >
-              <Code size={20} />
-              Read Articles
-            </Button>
+          <div className="glass-card p-6 rounded-xl">
+            <BookOpen className="w-12 h-12 text-neon-purple mb-4 mx-auto" />
+            <h3 className="text-xl font-semibold mb-3">Hall of Fame</h3>
+            <p className="text-muted-foreground">
+              Step-by-step guides and tutorials
+            </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="glass-card p-6 rounded-xl border border-border/50">
-              <div className="text-2xl font-bold text-primary mb-2">50+</div>
-              <div className="text-sm text-muted-foreground">Projects Built</div>
-            </div>
-            <div className="glass-card p-6 rounded-xl border border-border/50">
-              <div className="text-2xl font-bold text-primary mb-2">3+</div>
-              <div className="text-sm text-muted-foreground">Years Experience</div>
-            </div>
-            <div className="glass-card p-6 rounded-xl border border-border/50">
-              <div className="text-2xl font-bold text-primary mb-2">10k+</div>
-              <div className="text-sm text-muted-foreground">Lines of Code</div>
-            </div>
+          <div className="glass-card p-6 rounded-xl">
+            <Gamepad2 className="w-12 h-12 text-neon-pink mb-4 mx-auto" />
+            <h3 className="text-xl font-semibold mb-3">Snake Game</h3>
+            <p className="text-muted-foreground">
+              Classic Snake game with a cyberpunk twist
+            </p>
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-muted-foreground rounded-full mt-2 animate-pulse"></div>
-        </div>
-      </div>
-    </section>
+    </div>
   );
 };
 
