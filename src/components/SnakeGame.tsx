@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Play, Pause, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
@@ -7,9 +8,9 @@ interface Position {
   y: number;
 }
 
-const GRID_SIZE = 20;
-const INITIAL_SNAKE = [{ x: 10, y: 10 }];
-const INITIAL_FOOD = { x: 15, y: 15 };
+const GRID_SIZE = 16; // Reduced for better mobile experience
+const INITIAL_SNAKE = [{ x: 8, y: 8 }, { x: 8, y: 9 }]; // Start with 2 segments
+const INITIAL_FOOD = { x: 12, y: 6 };
 const INITIAL_DIRECTION = { x: 0, y: -1 };
 
 const SnakeGame = () => {
@@ -20,11 +21,16 @@ const SnakeGame = () => {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const generateFood = useCallback(() => {
-    const x = Math.floor(Math.random() * GRID_SIZE);
-    const y = Math.floor(Math.random() * GRID_SIZE);
-    return { x, y };
-  }, []);
+  const generateFood = useCallback((currentSnake: Position[] = snake) => {
+    let newFood;
+    do {
+      newFood = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE)
+      };
+    } while (currentSnake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+    return newFood;
+  }, [snake]);
 
   const resetGame = () => {
     setSnake(INITIAL_SNAKE);
@@ -64,7 +70,7 @@ const SnakeGame = () => {
       // Check food collision
       if (head.x === food.x && head.y === food.y) {
         setScore(prev => prev + 10);
-        setFood(generateFood());
+        setFood(generateFood(newSnake));
       } else {
         newSnake.pop();
       }
@@ -108,7 +114,7 @@ const SnakeGame = () => {
   }, [isPlaying]);
 
   useEffect(() => {
-    const gameInterval = setInterval(moveSnake, 150);
+    const gameInterval = setInterval(moveSnake, 250); // Slower speed (was 150ms)
     return () => clearInterval(gameInterval);
   }, [moveSnake]);
 
@@ -123,13 +129,13 @@ const SnakeGame = () => {
 
     if (isHead) return 'bg-cyan-400 shadow-lg shadow-cyan-400/50';
     if (isSnakeCell) return 'bg-green-500';
-    if (isFoodCell) return 'bg-pink-500 animate-pulse';
+    if (isFoodCell) return 'bg-pink-500'; // Removed animate-pulse to stop flickering
     return 'bg-gray-800 border border-gray-700';
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-2 sm:p-4">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-sm mx-auto"> {/* Made narrower for mobile */}
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-4">
           Snake Game
         </h1>
@@ -165,14 +171,14 @@ const SnakeGame = () => {
             </div>
           </div>
 
-          {/* Game Grid - Responsive sizing */}
-          <div className="flex justify-center mb-4">
+          {/* Game Grid - Perfect mobile size */}
+          <div className="flex justify-center mb-6">
             <div 
-              className="grid gap-px bg-gray-900 p-1 rounded border border-gray-600"
+              className="grid gap-px bg-gray-900 p-2 rounded border border-gray-600"
               style={{ 
                 gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-                width: 'min(85vw, 320px)',
-                height: 'min(85vw, 320px)'
+                width: '280px', // Fixed size perfect for mobile
+                height: '280px'
               }}
             >
               {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, index) => {
@@ -181,52 +187,51 @@ const SnakeGame = () => {
                 return (
                   <div
                     key={index}
-                    className={`aspect-square rounded-sm transition-all duration-100 ${getCellClass(x, y)}`}
-                    style={{ minWidth: '2px', minHeight: '2px' }}
+                    className={`aspect-square rounded-sm transition-colors duration-75 ${getCellClass(x, y)}`}
                   />
                 );
               })}
             </div>
           </div>
 
-          {/* Mobile-optimized touch controls */}
-          <div className="flex flex-col items-center gap-2">
+          {/* Large Mobile Controls */}
+          <div className="flex flex-col items-center gap-4 mb-6">
             {/* Up Button */}
             <Button
               variant="default"
               onClick={() => handleDirectionChange({ x: 0, y: -1 })}
-              className="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg"
+              className="w-16 h-16 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg text-white"
               disabled={!isPlaying}
             >
-              <ArrowUp size={20} />
+              <ArrowUp size={24} />
             </Button>
 
             {/* Left, Center, Right Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <Button
                 variant="default"
                 onClick={() => handleDirectionChange({ x: -1, y: 0 })}
-                className="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg"
+                className="w-16 h-16 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg text-white"
                 disabled={!isPlaying}
               >
-                <ArrowLeft size={20} />
+                <ArrowLeft size={24} />
               </Button>
 
               <Button
                 variant="outline"
                 onClick={toggleGame}
-                className="w-12 h-12 rounded-full border-gray-600 hover:bg-gray-700"
+                className="w-16 h-16 rounded-full border-gray-600 hover:bg-gray-700"
               >
-                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
               </Button>
 
               <Button
                 variant="default"
                 onClick={() => handleDirectionChange({ x: 1, y: 0 })}
-                className="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg"
+                className="w-16 h-16 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg text-white"
                 disabled={!isPlaying}
               >
-                <ArrowRight size={20} />
+                <ArrowRight size={24} />
               </Button>
             </div>
 
@@ -234,10 +239,10 @@ const SnakeGame = () => {
             <Button
               variant="default"
               onClick={() => handleDirectionChange({ x: 0, y: 1 })}
-              className="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg"
+              className="w-16 h-16 rounded-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-30 shadow-lg text-white"
               disabled={!isPlaying}
             >
-              <ArrowDown size={20} />
+              <ArrowDown size={24} />
             </Button>
           </div>
 
