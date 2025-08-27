@@ -14,6 +14,7 @@ const PersonalWebsite = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [showGame, setShowGame] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const categories = ['All', 'General', 'Tech', 'Business', 'Featured'];
 
@@ -97,8 +98,16 @@ const PersonalWebsite = () => {
           </div>
         )}
 
+        {/* Top Navigation */}
+        <Navigation
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          isAdmin={isAdmin}
+          onAdminToggle={() => setShowAdminPanel(true)}
+        />
+
         {showAdminPanel && isAdmin ? (
-          <div className="space-y-8">
+          <div className="space-y-8 pt-20">
             <div className="text-center">
               <h1 className="text-3xl font-bold mb-2">Admin Panel</h1>
               <p className="text-muted-foreground">Create and manage your content</p>
@@ -106,14 +115,23 @@ const PersonalWebsite = () => {
             <ContentForm />
           </div>
         ) : (
-          <div className="space-y-12">
-            <Hero />
-            <Navigation 
-              categories={categories}
-              selectedCategory={selectedCategory}
-              onCategorySelect={setSelectedCategory}
-            />
-            <ContentGrid selectedCategory={selectedCategory} />
+          <div className="space-y-12 pt-20">
+            {activeSection === 'home' && (
+              <Hero setActiveSection={setActiveSection} />
+            )}
+
+            {(activeSection === 'articles' || activeSection === 'guides') && (
+              <>
+                {/* Category filtering UI can be added later; defaulting to All */}
+                <ContentGrid selectedCategory={selectedCategory || 'All'} />
+              </>
+            )}
+
+            {activeSection === 'snake' && (
+              <div className="max-w-2xl mx-auto">
+                <SnakeGame />
+              </div>
+            )}
           </div>
         )}
       </div>

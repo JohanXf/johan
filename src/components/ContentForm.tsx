@@ -11,6 +11,8 @@ import { useCreateHallOfFameItem } from '@/hooks/useHallOfFame';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { toast } from 'sonner';
 import { Upload } from 'lucide-react';
+import type { Article } from '@/hooks/useArticles';
+import type { HallOfFameItem } from '@/hooks/useHallOfFame';
 
 const ContentForm = () => {
   const [formData, setFormData] = useState({
@@ -43,17 +45,28 @@ const ContentForm = () => {
         imageUrl = await uploadImage.mutateAsync(imageFile);
       }
 
-      const contentData = {
-        ...formData,
-        image_url: imageUrl,
-        featured: formData.type === 'hall_of_fame'
-      };
-
       if (formData.type === 'article') {
-        await createArticle.mutateAsync(contentData);
+        const articleData: Omit<Article, 'id' | 'created_at' | 'updated_at'> = {
+          title: formData.title,
+          description: formData.description,
+          content: formData.content,
+          category: formData.category || 'General',
+          read_time: formData.readTime,
+          image_url: imageUrl || undefined,
+        };
+        await createArticle.mutateAsync(articleData);
         toast.success('Article created successfully!');
       } else {
-        await createHallOfFameItem.mutateAsync(contentData);
+        const hofData: Omit<HallOfFameItem, 'id' | 'created_at' | 'updated_at'> = {
+          title: formData.title,
+          description: formData.description,
+          content: formData.content,
+          category: formData.category || 'Featured',
+          read_time: formData.readTime,
+          image_url: imageUrl || undefined,
+          featured: true,
+        };
+        await createHallOfFameItem.mutateAsync(hofData);
         toast.success('Hall of Fame item created successfully!');
       }
 

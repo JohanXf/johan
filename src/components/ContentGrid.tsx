@@ -49,18 +49,27 @@ const ContentGrid = ({ selectedCategory }: ContentGridProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredContent.map((item) => (
-        <ContentCard
-          key={`${item.type}-${item.id}`}
-          id={item.id}
-          title={item.title}
-          description={item.description}
-          imageUrl={item.image_url}
-          category={item.category}
-          readTime={item.read_time}
-          content={item.content}
-        />
-      ))}
+      {filteredContent.map((item) => {
+        const cardItem = {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          date: item.created_at ? new Date(item.created_at).toLocaleDateString() : '',
+          readTime: item.read_time,
+          category: item.category,
+          content: item.content,
+        };
+
+        return (
+          <ContentCard
+            key={`${item.type}-${item.id}`}
+            item={cardItem}
+            onSelect={() => {
+              console.log('Selected content:', cardItem);
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
