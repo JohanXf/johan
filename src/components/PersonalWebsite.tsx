@@ -29,7 +29,7 @@ const PersonalWebsite = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen"> 
       <div className="container mx-auto px-4 py-8">
         {/* Admin Controls */}
         <div className="fixed top-4 right-4 z-50 flex gap-2">
@@ -37,7 +37,7 @@ const PersonalWebsite = () => {
             onClick={() => setShowGame(!showGame)}
             size="sm"
             variant="outline"
-            className="bg-white/80 backdrop-blur-sm"
+            className="bg-secondary/60 backdrop-blur-sm"
           >
             <GamepadIcon className="w-4 h-4" />
           </Button>
@@ -46,7 +46,7 @@ const PersonalWebsite = () => {
               onClick={() => setShowAdminPanel(true)}
               size="sm"
               variant="outline"
-              className="bg-white/80 backdrop-blur-sm"
+              className="bg-secondary/60 backdrop-blur-sm"
             >
               <Settings className="w-4 h-4" />
             </Button>
@@ -55,7 +55,7 @@ const PersonalWebsite = () => {
               onClick={handleLogout}
               size="sm"
               variant="outline"
-              className="bg-white/80 backdrop-blur-sm"
+              className="bg-secondary/60 backdrop-blur-sm"
             >
               <LogOut className="w-4 h-4" />
             </Button>
@@ -65,7 +65,7 @@ const PersonalWebsite = () => {
         {/* Snake Game Modal */}
         {showGame && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="glass-card rounded-lg p-6 max-w-md w-full border border-border">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">Snake Game</h2>
                 <Button
@@ -84,7 +84,7 @@ const PersonalWebsite = () => {
         {/* Admin Panel */}
         {showAdminPanel && !isAdmin && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
-            <div className="relative">
+            <div className="relative glass-card rounded-lg border border-border">
               <Button
                 onClick={() => setShowAdminPanel(false)}
                 className="absolute -top-2 -right-2 z-10"
@@ -116,7 +116,7 @@ const PersonalWebsite = () => {
           </div>
         ) : (
           <div className="space-y-12 pt-20">
-            {activeSection === 'home' && (
+            {activeSection == 'home' && (
               <Hero setActiveSection={setActiveSection} />
             )}
 
@@ -140,3 +140,4 @@ const PersonalWebsite = () => {
 };
 
 export default PersonalWebsite;
+
