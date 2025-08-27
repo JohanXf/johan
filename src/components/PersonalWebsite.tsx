@@ -1,168 +1,122 @@
-import { useState, useEffect } from 'react';
-import Navigation from './Navigation';
+
+import { useState } from 'react';
 import Hero from './Hero';
+import Navigation from './Navigation';
 import ContentGrid from './ContentGrid';
-import ContentReader from './ContentReader';
 import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
 import SnakeGame from './SnakeGame';
-import { type ContentItem } from '@/data/sampleContent';
+import { Button } from './ui/button';
+import { Settings, LogOut, GamepadIcon } from 'lucide-react';
 
 const PersonalWebsite = () => {
-  const [activeSection, setActiveSection] = useState('home');
-  const [selectedArticle, setSelectedArticle] = useState<ContentItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [showAdminLogin, setShowAdminLogin] = useState(false);
-  const [articles, setArticles] = useState<ContentItem[]>([]);
-  const [guides, setGuides] = useState<ContentItem[]>([]);
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [createType, setCreateType] = useState<'article' | 'guide'>('article');
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [showGame, setShowGame] = useState(false);
 
-  // Admin functions
-  const handleAdminLogin = (password: string) => {
-    if (password === 'johan2025') {
-      setIsAdmin(true);
-      setShowAdminLogin(false);
-    } else {
-      alert('Invalid password');
-    }
+  const categories = ['All', 'General', 'Tech', 'Business', 'Featured'];
+
+  const handleAdminLogin = () => {
+    setIsAdmin(true);
+    setShowAdminPanel(true);
   };
 
-  const handleAdminLogout = () => {
+  const handleLogout = () => {
     setIsAdmin(false);
-    setActiveSection('home');
-  };
-
-  const handleAdminToggle = () => {
-    if (isAdmin) {
-      handleAdminLogout();
-    } else {
-      setShowAdminLogin(true);
-    }
-  };
-
-  const handleCreateContent = (formData: any) => {
-    const newContent: ContentItem = {
-      id: Date.now().toString(),
-      title: formData.title,
-      description: formData.description,
-      date: new Date().toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric' 
-      }),
-      readTime: formData.readTime || '5 min read',
-      category: formData.category || 'General',
-      content: formData.content
-    };
-
-    if (createType === 'article') {
-      setArticles([newContent, ...articles]);
-    } else {
-      setGuides([newContent, ...guides]);
-    }
-
-    setShowCreateForm(false);
-    setActiveSection(createType === 'article' ? 'articles' : 'guides');
-  };
-
-  const handleDeleteContent = (id: string, type: 'article' | 'guide') => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      if (type === 'article') {
-        setArticles(articles.filter(article => article.id !== id));
-      } else {
-        setGuides(guides.filter(guide => guide.id !== id));
-      }
-    }
-  };
-
-  const handleCreateNew = (type: 'article' | 'guide') => {
-    setCreateType(type);
-    setShowCreateForm(true);
-  };
-
-  const renderContent = () => {
-    // Show create form
-    if (showCreateForm) {
-      return (
-        <ContentForm
-          type={createType}
-          onSubmit={handleCreateContent}
-          onCancel={() => setShowCreateForm(false)}
-        />
-      );
-    }
-
-    // Show article reader
-    if (selectedArticle) {
-      return (
-        <ContentReader
-          item={selectedArticle}
-          onBack={() => setSelectedArticle(null)}
-        />
-      );
-    }
-
-    // Show sections
-    switch (activeSection) {
-      case 'home':
-        return <Hero setActiveSection={setActiveSection} />;
-      
-      case 'guides':
-        return (
-          <ContentGrid
-            title="Hall of Fame"
-            items={guides}
-            onSelectItem={setSelectedArticle}
-            onCreateNew={isAdmin ? () => handleCreateNew('guide') : undefined}
-            onDeleteItem={isAdmin ? (id) => handleDeleteContent(id, 'guide') : undefined}
-            isAdmin={isAdmin}
-            emptyMessage="No hall of fame content available yet."
-          />
-        );
-      
-      case 'articles':
-        return (
-          <ContentGrid
-            title="Articles"
-            items={articles}
-            onSelectItem={setSelectedArticle}
-            onCreateNew={isAdmin ? () => handleCreateNew('article') : undefined}
-            onDeleteItem={isAdmin ? (id) => handleDeleteContent(id, 'article') : undefined}
-            isAdmin={isAdmin}
-            emptyMessage="No articles available yet."
-          />
-        );
-      
-      case 'snake':
-        return <SnakeGame />;
-      
-      default:
-        return <Hero setActiveSection={setActiveSection} />;
-    }
+    setShowAdminPanel(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
-      <Navigation
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-        isAdmin={isAdmin}
-        onAdminToggle={handleAdminToggle}
-      />
-      
-      <main className="pt-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {renderContent()}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="container mx-auto px-4 py-8">
+        {/* Admin Controls */}
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <Button
+            onClick={() => setShowGame(!showGame)}
+            size="sm"
+            variant="outline"
+            className="bg-white/80 backdrop-blur-sm"
+          >
+            <GamepadIcon className="w-4 h-4" />
+          </Button>
+          {!isAdmin ? (
+            <Button
+              onClick={() => setShowAdminPanel(true)}
+              size="sm"
+              variant="outline"
+              className="bg-white/80 backdrop-blur-sm"
+            >
+              <Settings className="w-4 h-4" />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleLogout}
+              size="sm"
+              variant="outline"
+              className="bg-white/80 backdrop-blur-sm"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
+          )}
         </div>
-      </main>
 
-      {showAdminLogin && (
-        <AdminLogin
-          onLogin={handleAdminLogin}
-          onClose={() => setShowAdminLogin(false)}
-        />
-      )}
+        {/* Snake Game Modal */}
+        {showGame && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-semibold">Snake Game</h2>
+                <Button
+                  onClick={() => setShowGame(false)}
+                  variant="ghost"
+                  size="sm"
+                >
+                  ×
+                </Button>
+              </div>
+              <SnakeGame />
+            </div>
+          </div>
+        )}
+
+        {/* Admin Panel */}
+        {showAdminPanel && !isAdmin && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
+            <div className="relative">
+              <Button
+                onClick={() => setShowAdminPanel(false)}
+                className="absolute -top-2 -right-2 z-10"
+                size="sm"
+                variant="ghost"
+              >
+                ×
+              </Button>
+              <AdminLogin onLogin={handleAdminLogin} />
+            </div>
+          </div>
+        )}
+
+        {showAdminPanel && isAdmin ? (
+          <div className="space-y-8">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold mb-2">Admin Panel</h1>
+              <p className="text-muted-foreground">Create and manage your content</p>
+            </div>
+            <ContentForm />
+          </div>
+        ) : (
+          <div className="space-y-12">
+            <Hero />
+            <Navigation 
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategorySelect={setSelectedCategory}
+            />
+            <ContentGrid selectedCategory={selectedCategory} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

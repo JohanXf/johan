@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          read_time: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          read_time?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          read_time?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hall_of_fame: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string
+          description: string
+          featured: boolean | null
+          id: string
+          image_url: string | null
+          read_time: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string
+          description: string
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          read_time?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string
+          description?: string
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          read_time?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
