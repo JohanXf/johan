@@ -16,7 +16,7 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Simple password check - in a real app, this should be more secure
-    if (password === 'admin123') {
+    if (password === 'johan2025') {
       onLogin();
       setError('');
     } else {
