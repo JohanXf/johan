@@ -6,9 +6,11 @@ import { Skeleton } from './ui/skeleton';
 
 interface ContentGridProps {
   selectedCategory: string;
+  contentType: 'articles' | 'hall_of_fame';
+  onContentSelect: (item: any) => void;
 }
 
-const ContentGrid = ({ selectedCategory }: ContentGridProps) => {
+const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: ContentGridProps) => {
   const { data: articles = [], isLoading: articlesLoading } = useArticles();
   const { data: hallOfFame = [], isLoading: hallOfFameLoading } = useHallOfFame();
 
@@ -28,16 +30,13 @@ const ContentGrid = ({ selectedCategory }: ContentGridProps) => {
     );
   }
 
-  // Combine articles and hall of fame items
-  const allContent = [
-    ...articles.map(article => ({ ...article, type: 'article' as const })),
-    ...hallOfFame.map(item => ({ ...item, type: 'hall_of_fame' as const }))
-  ];
-
+  // Select the right content based on type
+  const content = contentType === 'articles' ? articles : hallOfFame;
+  
   // Filter by category
   const filteredContent = selectedCategory === 'All' 
-    ? allContent 
-    : allContent.filter(item => item.category === selectedCategory);
+    ? content 
+    : content.filter(item => item.category === selectedCategory);
 
   if (filteredContent.length === 0) {
     return (
@@ -62,11 +61,9 @@ const ContentGrid = ({ selectedCategory }: ContentGridProps) => {
 
         return (
           <ContentCard
-            key={`${item.type}-${item.id}`}
+            key={`${contentType}-${item.id}`}
             item={cardItem}
-            onSelect={() => {
-              console.log('Selected content:', cardItem);
-            }}
+            onSelect={() => onContentSelect(cardItem)}
           />
         );
       })}
