@@ -112,8 +112,9 @@ const SnakeGame = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isPlaying]);
 
+  // Slow down the game speed for smoother, easier play
   useEffect(() => {
-    const gameInterval = setInterval(moveSnake, 140); // Faster for smoother movement
+    const gameInterval = setInterval(moveSnake, 220);
     return () => clearInterval(gameInterval);
   }, [moveSnake]);
 
@@ -270,3 +271,4 @@ const SnakeGame = () => {
 };
 
 export default SnakeGame;
+

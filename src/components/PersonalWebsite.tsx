@@ -115,6 +115,8 @@ const PersonalWebsite = () => {
           setActiveSection={(section) => {
             setActiveSection(section);
             setSelectedContent(null); // Reset content selection when changing sections
+            setShowAdminPanel(false); // Close admin panel so navigation always works after login
+            setShowGame(false); // Close game modal when navigating
           }}
           isAdmin={isAdmin}
           onAdminToggle={() => setShowAdminPanel(true)}
@@ -136,7 +138,11 @@ const PersonalWebsite = () => {
         ) : (
           <div className="space-y-12 pt-20">
             {activeSection === 'home' && (
-              <Hero setActiveSection={setActiveSection} />
+              <Hero setActiveSection={(section) => {
+                setActiveSection(section);
+                setShowAdminPanel(false); // ensure admin panel doesn't block navigation
+                setSelectedContent(null);
+              }} />
             )}
 
             {activeSection === 'articles' && (
@@ -149,6 +155,8 @@ const PersonalWebsite = () => {
                   selectedCategory={selectedCategory}
                   contentType="articles"
                   onContentSelect={handleContentSelect}
+                  isAdmin={isAdmin}
+                  onEdit={() => setShowAdminPanel(true)}
                 />
               </div>
             )}
@@ -163,6 +171,8 @@ const PersonalWebsite = () => {
                   selectedCategory={selectedCategory}
                   contentType="hall_of_fame"
                   onContentSelect={handleContentSelect}
+                  isAdmin={isAdmin}
+                  onEdit={() => setShowAdminPanel(true)}
                 />
               </div>
             )}
@@ -180,3 +190,4 @@ const PersonalWebsite = () => {
 };
 
 export default PersonalWebsite;
+

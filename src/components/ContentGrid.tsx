@@ -8,9 +8,11 @@ interface ContentGridProps {
   selectedCategory: string;
   contentType: 'articles' | 'hall_of_fame';
   onContentSelect: (item: any) => void;
+  isAdmin?: boolean;
+  onEdit?: (item: any) => void;
 }
 
-const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: ContentGridProps) => {
+const ContentGrid = ({ selectedCategory, contentType, onContentSelect, isAdmin, onEdit }: ContentGridProps) => {
   const { data: articles = [], isLoading: articlesLoading } = useArticles();
   const { data: hallOfFame = [], isLoading: hallOfFameLoading } = useHallOfFame();
 
@@ -65,6 +67,8 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: Content
             key={`${contentType}-${item.id}`}
             item={cardItem}
             onSelect={() => onContentSelect(cardItem)}
+            isAdmin={isAdmin}
+            onEdit={onEdit ? () => onEdit(cardItem) : undefined}
           />
         );
       })}
@@ -73,3 +77,4 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: Content
 };
 
 export default ContentGrid;
+

@@ -1,5 +1,5 @@
 
-import { Calendar, Clock, ArrowRight, Trash2 } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Trash2, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ContentItem {
@@ -16,10 +16,11 @@ interface ContentCardProps {
   item: ContentItem;
   onSelect: (item: ContentItem) => void;
   onDelete?: (id: string) => void;
+  onEdit?: (item: ContentItem) => void;
   isAdmin?: boolean;
 }
 
-const ContentCard = ({ item, onSelect, onDelete, isAdmin }: ContentCardProps) => {
+const ContentCard = ({ item, onSelect, onDelete, onEdit, isAdmin }: ContentCardProps) => {
   return (
     <div
       className="glass-card p-6 rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300 group hover:shadow-card cursor-pointer"
@@ -36,18 +37,37 @@ const ContentCard = ({ item, onSelect, onDelete, isAdmin }: ContentCardProps) =>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
             {item.category}
           </span>
-          {isAdmin && onDelete && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete(item.id);
-              }}
-              className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
-            >
-              <Trash2 size={16} />
-            </Button>
+          {isAdmin && (
+            <div className="flex items-center gap-1">
+              {onEdit && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(item);
+                  }}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary/10"
+                  aria-label="Edit"
+                >
+                  <Pencil size={16} />
+                </Button>
+              )}
+              {onDelete && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(item.id);
+                  }}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                  aria-label="Delete"
+                >
+                  <Trash2 size={16} />
+                </Button>
+              )}
+            </div>
           )}
         </div>
 
@@ -93,3 +113,4 @@ const ContentCard = ({ item, onSelect, onDelete, isAdmin }: ContentCardProps) =>
 };
 
 export default ContentCard;
+

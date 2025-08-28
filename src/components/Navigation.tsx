@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Menu, X, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,13 +24,21 @@ const Navigation = ({ activeSection, setActiveSection, isAdmin, onAdminToggle }:
     <nav className="glass-card fixed top-0 left-0 right-0 z-50 backdrop-blur-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+          {/* Logo -> Click to go Home */}
+          <button
+            type="button"
+            aria-label="Go to Home"
+            onClick={() => {
+              setActiveSection('home');
+              setIsMobileMenuOpen(false);
+            }}
+            className="flex items-center space-x-2 group"
+          >
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:shadow-neon transition-shadow">
               <span className="text-primary-foreground font-bold">J</span>
             </div>
-            <span className="text-xl font-bold neon-text">Johan</span>
-          </div>
+            <span className="text-xl font-bold neon-text group-hover:opacity-90">Johan</span>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -112,3 +121,4 @@ const Navigation = ({ activeSection, setActiveSection, isAdmin, onAdminToggle }:
 };
 
 export default Navigation;
+
