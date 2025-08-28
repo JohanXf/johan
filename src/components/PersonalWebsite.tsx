@@ -18,8 +18,6 @@ const PersonalWebsite = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedContent, setSelectedContent] = useState<any>(null);
 
-  const categories = ['All', 'General', 'Tech', 'Business', 'Featured'];
-
   const handleAdminLogin = () => {
     setIsAdmin(true);
     setShowAdminPanel(true);
@@ -40,8 +38,9 @@ const PersonalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.02"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse"></div>
-      
+      {/* Decorative overlay (removed problematic data-URI pattern) */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 bg-gradient-to-t from-black/40 to-transparent"></div>
+
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Admin Controls */}
         <div className="fixed top-4 right-4 z-50 flex gap-2">
@@ -93,7 +92,7 @@ const PersonalWebsite = () => {
           </div>
         )}
 
-        {/* Admin Panel */}
+        {/* Admin Panel (login) */}
         {showAdminPanel && !isAdmin && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
             <div className="relative glass-card rounded-lg border border-border">
@@ -121,6 +120,7 @@ const PersonalWebsite = () => {
           onAdminToggle={() => setShowAdminPanel(true)}
         />
 
+        {/* Main Content Area */}
         {showAdminPanel && isAdmin ? (
           <div className="space-y-8 pt-20">
             <div className="text-center">
@@ -145,8 +145,8 @@ const PersonalWebsite = () => {
                   <h1 className="text-4xl font-bold mb-4">Articles</h1>
                   <p className="text-muted-foreground">Latest articles and insights</p>
                 </div>
-                <ContentGrid 
-                  selectedCategory={selectedCategory} 
+                <ContentGrid
+                  selectedCategory={selectedCategory}
                   contentType="articles"
                   onContentSelect={handleContentSelect}
                 />
@@ -159,8 +159,8 @@ const PersonalWebsite = () => {
                   <h1 className="text-4xl font-bold mb-4">Hall of Fame</h1>
                   <p className="text-muted-foreground">Featured content and guides</p>
                 </div>
-                <ContentGrid 
-                  selectedCategory={selectedCategory} 
+                <ContentGrid
+                  selectedCategory={selectedCategory}
                   contentType="hall_of_fame"
                   onContentSelect={handleContentSelect}
                 />

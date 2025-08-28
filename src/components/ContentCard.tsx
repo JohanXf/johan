@@ -1,3 +1,4 @@
+
 import { Calendar, Clock, ArrowRight, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -20,7 +21,15 @@ interface ContentCardProps {
 
 const ContentCard = ({ item, onSelect, onDelete, isAdmin }: ContentCardProps) => {
   return (
-    <div className="glass-card p-6 rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300 group hover:shadow-card">
+    <div
+      className="glass-card p-6 rounded-xl border border-border/50 hover:border-primary/30 transition-all duration-300 group hover:shadow-card cursor-pointer"
+      onClick={() => onSelect(item)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') onSelect(item);
+      }}
+    >
       <div className="space-y-4">
         {/* Category Badge */}
         <div className="flex items-center justify-between">
@@ -68,7 +77,10 @@ const ContentCard = ({ item, onSelect, onDelete, isAdmin }: ContentCardProps) =>
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onSelect(item)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelect(item);
+            }}
             className="group/btn text-primary hover:text-primary hover:bg-primary/10"
           >
             Read More

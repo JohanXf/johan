@@ -14,7 +14,7 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: Content
   const { data: articles = [], isLoading: articlesLoading } = useArticles();
   const { data: hallOfFame = [], isLoading: hallOfFameLoading } = useHallOfFame();
 
-  const isLoading = articlesLoading || hallOfFameLoading;
+  const isLoading = contentType === 'articles' ? articlesLoading : hallOfFameLoading;
 
   if (isLoading) {
     return (
@@ -32,11 +32,12 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: Content
 
   // Select the right content based on type
   const content = contentType === 'articles' ? articles : hallOfFame;
-  
+
   // Filter by category
-  const filteredContent = selectedCategory === 'All' 
-    ? content 
-    : content.filter(item => item.category === selectedCategory);
+  const filteredContent =
+    selectedCategory === 'All'
+      ? content
+      : content.filter((item) => item.category === selectedCategory);
 
   if (filteredContent.length === 0) {
     return (
@@ -48,7 +49,7 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect }: Content
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredContent.map((item) => {
+      {filteredContent.map((item: any) => {
         const cardItem = {
           id: item.id,
           title: item.title,
