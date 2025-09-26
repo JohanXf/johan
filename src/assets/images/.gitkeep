@@ -1,0 +1,10 @@
+# Images Folder
+
+This folder is for storing images used in the Hall of Fame and other sections.
+
+## Structure:
+- `hall-of-fame/` - Images for Hall of Fame featured content
+- `articles/` - Article header images
+- `general/` - General purpose images
+
+You can manually add images to these folders and reference them in your content.

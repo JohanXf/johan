@@ -6,9 +6,11 @@ import ContentGrid from './ContentGrid';
 import ContentReader from './ContentReader';
 import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
+import HallOfFameCarousel from './HallOfFameCarousel';
 import SnakeGame from './SnakeGame';
 import { Button } from './ui/button';
 import { Settings, LogOut, GamepadIcon } from 'lucide-react';
+import { Toaster } from './ui/toaster';
 
 const PersonalWebsite = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -165,11 +167,10 @@ const PersonalWebsite = () => {
               <div className="space-y-8">
                 <div className="text-center">
                   <h1 className="text-4xl font-bold mb-4">Hall of Fame</h1>
-                  <p className="text-muted-foreground">Featured content and guides</p>
+                  <p className="text-muted-foreground">Featured content and signature pieces</p>
                 </div>
-                <ContentGrid
+                <HallOfFameCarousel
                   selectedCategory={selectedCategory}
-                  contentType="hall_of_fame"
                   onContentSelect={handleContentSelect}
                   isAdmin={isAdmin}
                   onEdit={() => setShowAdminPanel(true)}
@@ -185,6 +186,7 @@ const PersonalWebsite = () => {
           </div>
         )}
       </div>
+      <Toaster />
     </div>
   );
 };
