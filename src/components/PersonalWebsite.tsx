@@ -19,6 +19,7 @@ const PersonalWebsite = () => {
   const [showGame, setShowGame] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [selectedContent, setSelectedContent] = useState<any>(null);
+  const [editingContent, setEditingContent] = useState<any>(null);
 
   const handleAdminLogin = () => {
     setIsAdmin(true);
@@ -28,6 +29,7 @@ const PersonalWebsite = () => {
   const handleLogout = () => {
     setIsAdmin(false);
     setShowAdminPanel(false);
+    setEditingContent(null);
   };
 
   const handleContentSelect = (item: any) => {
@@ -36,6 +38,17 @@ const PersonalWebsite = () => {
 
   const handleBackToGrid = () => {
     setSelectedContent(null);
+    setEditingContent(null);
+  };
+
+  const handleEditContent = (content: any) => {
+    setEditingContent(content);
+    setShowAdminPanel(true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingContent(null);
+    setShowAdminPanel(false);
   };
 
   return (
@@ -128,10 +141,10 @@ const PersonalWebsite = () => {
         {showAdminPanel && isAdmin ? (
           <div className="space-y-8 pt-20">
             <div className="text-center">
-              <h1 className="text-3xl font-bold mb-2">Admin Panel</h1>
-              <p className="text-muted-foreground">Create and manage your content</p>
+              <h1 className="text-3xl font-bold mb-2">{editingContent ? 'Edit Content' : 'Admin Panel'}</h1>
+              <p className="text-muted-foreground">{editingContent ? 'Update your content' : 'Create and manage your content'}</p>
             </div>
-            <ContentForm />
+            <ContentForm editContent={editingContent} onCancel={handleCancelEdit} />
           </div>
         ) : selectedContent ? (
           <div className="pt-20">
@@ -158,7 +171,7 @@ const PersonalWebsite = () => {
                   contentType="articles"
                   onContentSelect={handleContentSelect}
                   isAdmin={isAdmin}
-                  onEdit={() => setShowAdminPanel(true)}
+                  onEdit={handleEditContent}
                 />
               </div>
             )}
@@ -173,7 +186,7 @@ const PersonalWebsite = () => {
                   selectedCategory={selectedCategory}
                   onContentSelect={handleContentSelect}
                   isAdmin={isAdmin}
-                  onEdit={() => setShowAdminPanel(true)}
+                  onEdit={handleEditContent}
                 />
               </div>
             )}

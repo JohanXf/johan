@@ -60,6 +60,7 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect, isAdmin, 
           readTime: item.read_time,
           category: item.category,
           content: item.content,
+          image_url: item.image_url,
         };
 
         return (
@@ -68,7 +69,7 @@ const ContentGrid = ({ selectedCategory, contentType, onContentSelect, isAdmin, 
             item={cardItem}
             onSelect={() => onContentSelect(cardItem)}
             isAdmin={isAdmin}
-            onEdit={onEdit ? () => onEdit(cardItem) : undefined}
+            onEdit={onEdit ? () => onEdit(item) : undefined}
           />
         );
       })}

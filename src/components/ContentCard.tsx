@@ -10,6 +10,7 @@ interface ContentItem {
   readTime: string;
   category: string;
   content: string;
+  image_url?: string;
 }
 
 interface ContentCardProps {
@@ -32,6 +33,17 @@ const ContentCard = ({ item, onSelect, onDelete, onEdit, isAdmin }: ContentCardP
       }}
     >
       <div className="space-y-4">
+        {/* Thumbnail Image */}
+        {item.image_url && (
+          <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+            <img 
+              src={item.image_url} 
+              alt={item.title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
+
         {/* Category Badge */}
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">

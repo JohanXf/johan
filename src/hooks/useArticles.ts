@@ -48,3 +48,24 @@ export const useCreateArticle = () => {
     },
   });
 };
+
+export const useUpdateArticle = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, ...article }: Partial<Article> & { id: string }) => {
+      const { data, error } = await supabase
+        .from('articles')
+        .update(article)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['articles'] });
+    },
+  });
+};

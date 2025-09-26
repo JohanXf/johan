@@ -6,28 +6,38 @@ import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Label } from './ui/label';
-import { useCreateArticle } from '@/hooks/useArticles';
-import { useCreateHallOfFameItem } from '@/hooks/useHallOfFame';
+import { useCreateArticle, useUpdateArticle } from '@/hooks/useArticles';
+import { useCreateHallOfFameItem, useUpdateHallOfFameItem } from '@/hooks/useHallOfFame';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { toast } from 'sonner';
 import { Upload } from 'lucide-react';
 import type { Article } from '@/hooks/useArticles';
 import type { HallOfFameItem } from '@/hooks/useHallOfFame';
 
-const ContentForm = () => {
+interface ContentFormProps {
+  editContent?: any;
+  onCancel?: () => void;
+}
+
+const ContentForm = ({ editContent, onCancel }: ContentFormProps) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    content: '',
-    category: '',
-    readTime: '5 min read',
-    type: 'article' as 'article' | 'hall_of_fame'
+    title: editContent?.title || '',
+    description: editContent?.description || '',
+    content: editContent?.content || '',
+    category: editContent?.category || '',
+    readTime: editContent?.read_time || editContent?.readTime || '5 min read',
+    type: (editContent ? (editContent.featured !== undefined ? 'hall_of_fame' : 'article') : 'article') as 'article' | 'hall_of_fame'
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [existingImageUrl, setExistingImageUrl] = useState<string>(editContent?.image_url || '');
 
   const createArticle = useCreateArticle();
+  const updateArticle = useUpdateArticle();
   const createHallOfFameItem = useCreateHallOfFameItem();
+  const updateHallOfFameItem = useUpdateHallOfFameItem();
   const uploadImage = useImageUpload();
+
+  const isEditing = !!editContent;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +48,7 @@ const ContentForm = () => {
     }
 
     try {
-      let imageUrl = '';
+      let imageUrl = existingImageUrl;
       
       if (imageFile) {
         toast.info('Uploading image...');
@@ -46,7 +56,7 @@ const ContentForm = () => {
       }
 
       if (formData.type === 'article') {
-        const articleData: Omit<Article, 'id' | 'created_at' | 'updated_at'> = {
+        const articleData = {
           title: formData.title,
           description: formData.description,
           content: formData.content,
@@ -54,10 +64,16 @@ const ContentForm = () => {
           read_time: formData.readTime,
           image_url: imageUrl || undefined,
         };
-        await createArticle.mutateAsync(articleData);
-        toast.success('Article created successfully!');
+
+        if (isEditing) {
+          await updateArticle.mutateAsync({ id: editContent.id, ...articleData });
+          toast.success('Article updated successfully!');
+        } else {
+          await createArticle.mutateAsync(articleData);
+          toast.success('Article created successfully!');
+        }
       } else {
-        const hofData: Omit<HallOfFameItem, 'id' | 'created_at' | 'updated_at'> = {
+        const hofData = {
           title: formData.title,
           description: formData.description,
           content: formData.content,
@@ -66,20 +82,32 @@ const ContentForm = () => {
           image_url: imageUrl || undefined,
           featured: true,
         };
-        await createHallOfFameItem.mutateAsync(hofData);
-        toast.success('Hall of Fame item created successfully!');
+
+        if (isEditing) {
+          await updateHallOfFameItem.mutateAsync({ id: editContent.id, ...hofData });
+          toast.success('Hall of Fame item updated successfully!');
+        } else {
+          await createHallOfFameItem.mutateAsync(hofData);
+          toast.success('Hall of Fame item created successfully!');
+        }
       }
 
-      // Reset form
-      setFormData({
-        title: '',
-        description: '',
-        content: '',
-        category: '',
-        readTime: '5 min read',
-        type: 'article'
-      });
-      setImageFile(null);
+      if (!isEditing) {
+        // Reset form only when creating new content
+        setFormData({
+          title: '',
+          description: '',
+          content: '',
+          category: '',
+          readTime: '5 min read',
+          type: 'article'
+        });
+        setImageFile(null);
+        setExistingImageUrl('');
+      } else {
+        // Close edit form
+        onCancel?.();
+      }
     } catch (error) {
       console.error('Error creating content:', error);
       toast.error('Failed to create content. Please try again.');
@@ -92,12 +120,14 @@ const ContentForm = () => {
     }
   };
 
-  const isLoading = createArticle.isPending || createHallOfFameItem.isPending || uploadImage.isPending;
+  const isLoading = createArticle.isPending || createHallOfFameItem.isPending || 
+                   updateArticle.isPending || updateHallOfFameItem.isPending || 
+                   uploadImage.isPending;
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Create New Content</CardTitle>
+        <CardTitle>{isEditing ? 'Edit Content' : 'Create New Content'}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,6 +138,7 @@ const ContentForm = () => {
               onValueChange={(value: 'article' | 'hall_of_fame') =>
                 setFormData(prev => ({ ...prev, type: value }))
               }
+              disabled={isEditing}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select content type" />
@@ -184,7 +215,17 @@ const ContentForm = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image">Image</Label>
+            <Label htmlFor="image">Thumbnail Image</Label>
+            {existingImageUrl && (
+              <div className="mb-2">
+                <img 
+                  src={existingImageUrl} 
+                  alt="Current thumbnail" 
+                  className="w-32 h-20 object-cover rounded border"
+                />
+                <p className="text-xs text-muted-foreground mt-1">Current image</p>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Input
                 id="image"
@@ -200,14 +241,21 @@ const ContentForm = () => {
                 className="w-full"
               >
                 <Upload className="w-4 h-4 mr-2" />
-                {imageFile ? imageFile.name : 'Choose Image'}
+                {imageFile ? imageFile.name : existingImageUrl ? 'Change Image' : 'Choose Image'}
               </Button>
             </div>
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating...' : `Create ${formData.type === 'article' ? 'Article' : 'Hall of Fame Item'}`}
-          </Button>
+          <div className="flex gap-2">
+            <Button type="submit" className="flex-1" disabled={isLoading}>
+              {isLoading ? (isEditing ? 'Updating...' : 'Creating...') : (isEditing ? 'Update' : `Create ${formData.type === 'article' ? 'Article' : 'Hall of Fame Item'}`)}
+            </Button>
+            {isEditing && onCancel && (
+              <Button type="button" variant="outline" onClick={onCancel}>
+                Cancel
+              </Button>
+            )}
+          </div>
         </form>
       </CardContent>
     </Card>

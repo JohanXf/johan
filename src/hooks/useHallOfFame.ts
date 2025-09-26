@@ -49,3 +49,24 @@ export const useCreateHallOfFameItem = () => {
     },
   });
 };
+
+export const useUpdateHallOfFameItem = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, ...item }: Partial<HallOfFameItem> & { id: string }) => {
+      const { data, error } = await supabase
+        .from('hall_of_fame')
+        .update(item)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['hall_of_fame'] });
+    },
+  });
+};

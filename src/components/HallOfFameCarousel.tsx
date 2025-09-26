@@ -108,7 +108,7 @@ const HallOfFameCarousel = ({
                             className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0"
                             onClick={(e) => {
                               e.stopPropagation();
-                              onEdit(cardItem);
+                              onEdit(item);
                             }}
                           >
                             <Edit2 className="h-4 w-4" />
