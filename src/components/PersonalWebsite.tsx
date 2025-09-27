@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Hero from './Hero';
 import Navigation from './Navigation';
-import ContentGrid from './ContentGrid';
+import ArticlesGrid from './ArticlesGrid';
+import HallOfFameGrid from './HallOfFameGrid';
 import ContentReader from './ContentReader';
 import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
@@ -166,9 +167,8 @@ const PersonalWebsite = () => {
                   <h1 className="text-4xl font-bold mb-4">Articles</h1>
                   <p className="text-muted-foreground">Latest articles and insights</p>
                 </div>
-                <ContentGrid
+                <ArticlesGrid
                   selectedCategory={selectedCategory}
-                  contentType="articles"
                   onContentSelect={handleContentSelect}
                   isAdmin={isAdmin}
                   onEdit={handleEditContent}
@@ -188,6 +188,15 @@ const PersonalWebsite = () => {
                   isAdmin={isAdmin}
                   onEdit={handleEditContent}
                 />
+                <div className="mt-12">
+                  <h2 className="text-2xl font-bold mb-6 text-center">All Hall of Fame</h2>
+                  <HallOfFameGrid
+                    selectedCategory={selectedCategory}
+                    onContentSelect={handleContentSelect}
+                    isAdmin={isAdmin}
+                    onEdit={handleEditContent}
+                  />
+                </div>
               </div>
             )}
 

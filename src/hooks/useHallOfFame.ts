@@ -70,3 +70,21 @@ export const useUpdateHallOfFameItem = () => {
     },
   });
 };
+
+export const useDeleteHallOfFameItem = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from('hall_of_fame')
+        .delete()
+        .eq('id', id);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['hall_of_fame'] });
+    },
+  });
+};

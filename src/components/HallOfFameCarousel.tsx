@@ -1,9 +1,11 @@
-import { useHallOfFame } from '@/hooks/useHallOfFame';
+import { useHallOfFame, useDeleteHallOfFameItem } from '@/hooks/useHallOfFame';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Edit2 } from 'lucide-react';
+import { Edit2, Trash2 } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
+import { useToast } from '@/hooks/use-toast';
+import Autoplay from 'embla-carousel-autoplay';
 import {
   Carousel,
   CarouselContent,
@@ -26,6 +28,26 @@ const HallOfFameCarousel = ({
   onEdit 
 }: HallOfFameCarouselProps) => {
   const { data: hallOfFame = [], isLoading } = useHallOfFame();
+  const deleteHallOfFameItem = useDeleteHallOfFameItem();
+  const { toast } = useToast();
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this Hall of Fame item?')) {
+      try {
+        await deleteHallOfFameItem.mutateAsync(id);
+        toast({
+          title: "Success",
+          description: "Hall of Fame item deleted successfully",
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete Hall of Fame item",
+          variant: "destructive",
+        });
+      }
+    }
+  };
 
   // Filter by category
   const filteredContent = selectedCategory === 'All' 
@@ -76,6 +98,12 @@ const HallOfFameCarousel = ({
           align: "start",
           loop: true,
         }}
+        plugins={[
+          Autoplay({
+            delay: 4000,
+            stopOnInteraction: true,
+          }),
+        ]}
       >
         <CarouselContent>
           {filteredContent.map((item: any) => {
@@ -101,18 +129,33 @@ const HallOfFameCarousel = ({
                         <Badge variant="secondary" className="text-xs mb-2">
                           {item.category}
                         </Badge>
-                        {isAdmin && onEdit && (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onEdit(item);
-                            }}
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </Button>
+                        {isAdmin && (
+                          <div className="flex items-center gap-1">
+                            {onEdit && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onEdit(item);
+                                }}
+                              >
+                                <Edit2 className="h-4 w-4" />
+                              </Button>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0 text-destructive hover:text-destructive"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(item.id);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         )}
                       </div>
                       <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
