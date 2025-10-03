@@ -80,7 +80,7 @@ const ContentReader = ({ item, onBack }: ContentReaderProps) => {
                 <img 
                   src={item.image_url} 
                   alt={item.title}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
             )}
@@ -91,12 +91,12 @@ const ContentReader = ({ item, onBack }: ContentReaderProps) => {
             </span>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
               {item.title}
             </h1>
 
             {/* Description */}
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               {item.description}
             </p>
 
