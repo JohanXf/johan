@@ -9,6 +9,7 @@ interface ContentItem {
   readTime: string;
   category: string;
   content: string;
+  image_url?: string;
 }
 
 interface ContentReaderProps {
@@ -73,6 +74,17 @@ const ContentReader = ({ item, onBack }: ContentReaderProps) => {
         {/* Article Header */}
         <div className="glass-card p-8 rounded-xl border border-border/50 mb-8">
           <div className="space-y-4">
+            {/* Thumbnail Image */}
+            {item.image_url && (
+              <div className="w-full aspect-video rounded-lg overflow-hidden mb-6">
+                <img 
+                  src={item.image_url} 
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
             {/* Category */}
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
               {item.category}
