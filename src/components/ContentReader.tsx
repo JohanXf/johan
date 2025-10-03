@@ -76,11 +76,11 @@ const ContentReader = ({ item, onBack }: ContentReaderProps) => {
           <div className="space-y-4">
             {/* Thumbnail Image */}
             {item.image_url && (
-              <div className="w-full aspect-video rounded-lg overflow-hidden mb-6">
+              <div className="w-full aspect-video rounded-lg overflow-hidden mb-6 bg-muted">
                 <img 
                   src={item.image_url} 
                   alt={item.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
             )}
