@@ -91,12 +91,12 @@ const ContentReader = ({ item, onBack }: ContentReaderProps) => {
             </span>
 
             {/* Title */}
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
               {item.title}
             </h1>
 
             {/* Description */}
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               {item.description}
             </p>
 
