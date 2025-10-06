@@ -172,48 +172,47 @@ const DinoGame = () => {
   return (
     <div className="flex flex-col items-center gap-6 p-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold">Chrome Dino Game</h2>
-        <div className="flex justify-center gap-8 text-sm font-mono">
-          <div className="text-gray-600">
-            HI <span className="text-gray-800 font-bold">{String(highScore).padStart(5, '0')}</span>
+        <h2 className="text-2xl font-bold text-[#535353]">Chrome Dino Game</h2>
+        <div className="flex justify-center gap-4 text-xs font-mono text-[#535353] tracking-wider">
+          <div>
+            HI <span className="font-bold">{String(highScore).padStart(5, '0')}</span>
           </div>
-          <div className="text-gray-600">
-            <span className="text-gray-800 font-bold">{String(score).padStart(5, '0')}</span>
+          <div>
+            <span className="font-bold">{String(score).padStart(5, '0')}</span>
           </div>
         </div>
       </div>
 
       {/* Game Container */}
-      <div className="relative w-full max-w-[600px] h-[200px] bg-white border-2 border-gray-300 overflow-hidden">
+      <div className="relative w-full max-w-[600px] h-[200px] bg-[#f7f7f7] overflow-hidden">
         {/* Clouds */}
         {clouds.map(cloud => (
           <div
             key={cloud.id}
-            className="absolute"
+            className="absolute opacity-30"
             style={{
               left: `${cloud.x}px`,
               top: `${cloud.y}px`,
             }}
           >
-            <div className="flex gap-2">
-              <div className="w-8 h-5 bg-gray-200 rounded-full"></div>
-              <div className="w-6 h-4 bg-gray-200 rounded-full -ml-4 mt-1"></div>
-              <div className="w-7 h-5 bg-gray-200 rounded-full -ml-3"></div>
-            </div>
+            <svg width="46" height="14" viewBox="0 0 46 14" fill="none">
+              <rect x="10" y="7" width="2" height="2" fill="#535353"/>
+              <rect x="12" y="9" width="2" height="2" fill="#535353"/>
+              <rect x="14" y="11" width="4" height="2" fill="#535353"/>
+              <rect x="18" y="13" width="8" height="1" fill="#535353"/>
+              <rect x="26" y="11" width="6" height="2" fill="#535353"/>
+              <rect x="32" y="9" width="2" height="2" fill="#535353"/>
+              <rect x="10" y="5" width="2" height="2" fill="#535353"/>
+              <rect x="12" y="3" width="8" height="2" fill="#535353"/>
+              <rect x="20" y="1" width="10" height="2" fill="#535353"/>
+              <rect x="30" y="3" width="6" height="2" fill="#535353"/>
+              <rect x="36" y="5" width="2" height="2" fill="#535353"/>
+            </svg>
           </div>
         ))}
 
-        {/* Ground with dashes */}
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-400"></div>
-        <div className="absolute bottom-0 left-0 right-0 flex">
-          {Array.from({ length: 30 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-5 h-[2px] border-t-2 border-gray-300 border-dashed"
-              style={{ marginLeft: i === 0 ? '0' : '15px' }}
-            ></div>
-          ))}
-        </div>
+        {/* Ground line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#535353]"></div>
 
         {/* Character (Dino) */}
         <div
@@ -222,15 +221,15 @@ const DinoGame = () => {
           }`}
           style={{ 
             bottom: `${dinoBottom}px`,
-            width: isDucking ? '50px' : '44px',
-            height: isDucking ? '35px' : '50px'
+            width: isDucking ? '59px' : '44px',
+            height: isDucking ? '26px' : '47px'
           }}
         >
           <img
             src={dinoCharacter}
-            alt="Character"
-            className="w-full h-full object-cover rounded-lg"
-            style={{ imageRendering: 'pixelated' }}
+            alt="Dino"
+            className="w-full h-full object-contain"
+            style={{ imageRendering: 'pixelated', filter: 'contrast(1.2)' }}
           />
         </div>
 
@@ -245,42 +244,41 @@ const DinoGame = () => {
             }}
           >
             {obstacle.type === 'cactus' ? (
-              // Cactus - Pixel art style
-              <div className="relative" style={{ width: '20px', height: '40px' }}>
-                {/* Main stem */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-full bg-gray-700"></div>
-                {/* Left arm */}
-                <div className="absolute top-2 left-0 w-1.5 h-3 bg-gray-700"></div>
-                <div className="absolute top-2 left-0 w-3 h-1.5 bg-gray-700"></div>
-                {/* Right arm */}
-                <div className="absolute top-4 right-0 w-1.5 h-3 bg-gray-700"></div>
-                <div className="absolute top-4 right-0 w-3 h-1.5 bg-gray-700"></div>
-              </div>
+              // Cactus - Chrome style pixel art
+              <svg width="25" height="45" viewBox="0 0 25 45" fill="none">
+                {/* Small cactus */}
+                <rect x="11" y="25" width="3" height="20" fill="#535353"/>
+                <rect x="8" y="30" width="3" height="8" fill="#535353"/>
+                <rect x="8" y="32" width="6" height="2" fill="#535353"/>
+                <rect x="14" y="28" width="3" height="10" fill="#535353"/>
+                <rect x="11" y="30" width="6" height="2" fill="#535353"/>
+              </svg>
             ) : (
-              // Pterodactyl - Pixel art style
-              <div className="relative" style={{ width: '46px', height: '40px' }}>
-                {/* Body */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-4 bg-gray-700"></div>
-                {/* Head */}
-                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-3 h-3 bg-gray-700"></div>
-                {/* Beak */}
-                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-2 h-1 bg-gray-700" style={{ transform: 'translateX(100%) translateY(-50%)' }}></div>
-                {/* Wings */}
-                <div className={`absolute top-0 left-2 w-10 h-2 bg-gray-700 origin-left ${isPlaying ? 'animate-pulse' : ''}`}></div>
-                <div className={`absolute bottom-0 left-2 w-10 h-2 bg-gray-700 origin-left ${isPlaying ? 'animate-pulse' : ''}`}></div>
-              </div>
+              // Pterodactyl - Chrome style pixel art
+              <svg width="46" height="40" viewBox="0 0 46 40" fill="none" className={isPlaying ? 'animate-pulse' : ''}>
+                <rect x="4" y="15" width="2" height="2" fill="#535353"/>
+                <rect x="6" y="13" width="2" height="6" fill="#535353"/>
+                <rect x="8" y="11" width="2" height="10" fill="#535353"/>
+                <rect x="10" y="9" width="2" height="14" fill="#535353"/>
+                <rect x="12" y="7" width="4" height="2" fill="#535353"/>
+                <rect x="12" y="21" width="4" height="2" fill="#535353"/>
+                <rect x="16" y="9" width="6" height="2" fill="#535353"/>
+                <rect x="16" y="19" width="6" height="2" fill="#535353"/>
+                <rect x="22" y="11" width="8" height="8" fill="#535353"/>
+                <rect x="30" y="13" width="4" height="4" fill="#535353"/>
+                <rect x="34" y="15" width="4" height="2" fill="#535353"/>
+                <rect x="38" y="15" width="2" height="2" fill="#535353"/>
+                <rect x="32" y="15" width="2" height="2" fill="#fff"/>
+              </svg>
             )}
           </div>
         ))}
 
         {/* Game Over Message */}
         {isGameOver && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/90">
-            <div className="text-center space-y-4">
-              <h3 className="text-2xl font-bold text-gray-800 font-mono">G A M E  O V E R</h3>
-              <Button onClick={toggleGame} variant="outline" className="bg-white">
-                ↻ Restart
-              </Button>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-[#535353] font-mono tracking-wider">G A M E  O V E R</h3>
             </div>
           </div>
         )}
@@ -288,7 +286,7 @@ const DinoGame = () => {
         {/* Start Message */}
         {!isPlaying && !isGameOver && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-gray-500 text-sm font-mono">Press SPACE or click START to play</p>
+            <p className="text-[#535353] text-xs font-mono">Press SPACE to play</p>
           </div>
         )}
       </div>
@@ -298,14 +296,15 @@ const DinoGame = () => {
         <Button
           onClick={toggleGame}
           disabled={isGameOver}
-          variant={isPlaying ? "outline" : "default"}
-          className="bg-gray-800 hover:bg-gray-700 text-white"
+          variant="outline"
+          className="border-[#535353] text-[#535353] hover:bg-[#535353] hover:text-white"
         >
           {isPlaying ? 'Pause' : 'Start'}
         </Button>
         <Button
           onClick={resetGame}
           variant="outline"
+          className="border-[#535353] text-[#535353] hover:bg-[#535353] hover:text-white"
         >
           Reset
         </Button>
@@ -316,7 +315,7 @@ const DinoGame = () => {
         <Button
           onTouchStart={jump}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-[#535353] text-[#535353]"
         >
           Jump
         </Button>
@@ -324,14 +323,14 @@ const DinoGame = () => {
           onTouchStart={() => duck(true)}
           onTouchEnd={() => duck(false)}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-[#535353] text-[#535353]"
         >
           Duck
         </Button>
       </div>
 
       {/* Instructions */}
-      <div className="text-center text-sm text-gray-600 space-y-1 font-mono">
+      <div className="text-center text-xs text-[#535353] space-y-1 font-mono">
         <p>Press SPACE or ↑ to jump</p>
         <p>Press ↓ to duck</p>
         <p className="md:hidden">(Or use the buttons above)</p>
