@@ -9,6 +9,7 @@ import ContentForm from './ContentForm';
 import AdminLogin from './AdminLogin';
 import HallOfFameCarousel from './HallOfFameCarousel';
 import SnakeGame from './SnakeGame';
+import DinoGame from './DinoGame';
 import { Button } from './ui/button';
 import { Settings, LogOut, GamepadIcon } from 'lucide-react';
 import { Toaster } from './ui/toaster';
@@ -203,6 +204,12 @@ const PersonalWebsite = () => {
             {activeSection === 'snake' && (
               <div className="max-w-2xl mx-auto">
                 <SnakeGame />
+              </div>
+            )}
+
+            {activeSection === 'dino-game' && (
+              <div className="max-w-2xl mx-auto">
+                <DinoGame />
               </div>
             )}
           </div>
