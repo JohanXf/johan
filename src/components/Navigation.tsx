@@ -17,8 +17,7 @@ const Navigation = ({ activeSection, setActiveSection, isAdmin, onAdminToggle }:
     { id: 'home', label: 'Home' },
     { id: 'guides', label: 'Hall of Fame' },
     { id: 'articles', label: 'Articles' },
-    { id: 'snake', label: 'Snake Game' },
-    { id: 'dino-game', label: 'Dino Game' }
+    { id: 'snake', label: 'Snake Game' }
   ];
 
   return (
